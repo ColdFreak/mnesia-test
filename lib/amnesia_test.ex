@@ -1,0 +1,2 @@
+defmodule Mtest do
+end
