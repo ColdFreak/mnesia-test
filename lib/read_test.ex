@@ -1,9 +1,17 @@
 defmodule ReadTest do
   use Database
   use Amnesia
+  def message_list(table_name) do
+    Amnesia.transaction do
+      iterator = fn(rec, acc) ->
+        [rec | acc]
+      end
+      Amnesia.Table.foldl(table_name, [], iterator)
+    end
+  end
   def print_all(table_name) do
     Amnesia.transaction do
-      iterator = fn(rec, _newAcc) ->
+      iterator = fn(rec, _acc) ->
         IO.puts "#{inspect rec}"
       end
       Amnesia.Table.foldl(table_name, [], iterator)
@@ -15,8 +23,9 @@ defmodule ReadTest do
   def find_user_by_email(user_email) do
     Amnesia.transaction do
       selection = User.where email == user_email,
-        select: name
-      selection |> Amnesia.Selection.values |> Enum.each(&IO.puts(&1))
+        select: {name, email}
+      selection |> Amnesia.Selection.values
+      # selection |> Amnesia.Selection.values |> Enum.each(&IO.puts(&1))
     end
   end
 

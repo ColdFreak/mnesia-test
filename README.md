@@ -26,12 +26,12 @@ iex(6)> user02 = WriteTest.create_user("user02", "user02@example.com")
 iex(7)> WriteTest.add_message(user02, "this is message from user02")
 %Database.Message{content: "this is message from user02", user_id: 2}
 
-iex(20)> ReadTest.list_all(User)
+iex(20)> ReadTest.print_all(User)
 {Database.User, 1, "user01", "user01@example.com"}
 {Database.User, 2, "user02", "user02@example.com"}
 :ok
 
-iex(21)> ReadTest.list_all(Message)
+iex(21)> ReadTest.print_all(Message)
 {Database.Message, 2, "this is message from user02"}
 {Database.Message, 1, "this is message from user01"}
 :ok
